@@ -1,7 +1,7 @@
 #include QMK_KEYBOARD_H
 
 #include "quantum.h"
-#include "keymap_us_extended.h"
+#include "keymap_us_international.h"
 
 enum layer_number {
   _QWERTY = 0,
@@ -10,9 +10,10 @@ enum layer_number {
   _ADJUST,
 };
 
-enum {
+enum custom_keycodes{
   TD_ENHE,
   TD_LSHT_CLOCK,
+  _ENHE,
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -37,17 +38,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_TAB,            KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                     KC_Y,        KC_U,    KC_I,    KC_O,    KC_P,    KC_MINS, \
   KC_LCTRL,          KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                     KC_H,        KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT, \
   TD(TD_LSHT_CLOCK), KC_Z,   KC_X,    KC_C,    KC_V,    KC_B, KC_LBRC,  KC_RBRC,  TD(TD_ENHE), KC_M,    KC_COMM, KC_DOT,  KC_SLSH,  KC_GRV, \
-                        KC_LALT, KC_LGUI, MO(_LOWER), KC_SPC,  KC_ENT, MO(_RAISE), KC_BSPC, KC_RGUI \
+                        KC_LALT, KC_LGUI, MO(_LOWER), KC_SPC,  KC_ENT, MO(_RAISE), KC_BSPC, KC_RALT \
 ),
 /* LOWER
  * ,-----------------------------------------.                    ,-----------------------------------------.
- * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
+ * |      |   ¡  |   ¿  |      |      |      |                    |      |      |      |      |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |                    |  F7  |  F8  |  F9  | F10  | F11  | F12  |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |   `  |   !  |   @  |   #  |   $  |   %  |-------.    ,-------|   ^  |   &  |   *  |   (  |   )  |   -  |
  * |------+------+------+------+------+------|   [   |    |    ]  |------+------+------+------+------+------|
- * |KC_CAPS|      |      |      |      |      |-------|    |-------|      |   _  |   +  |   {  |   }  |   |  |
+ * |KC_CAPS|  ¡  |  ¿  |   °  |   ¬  |      |-------|    |-------|  Ñ  |   _  |   +  |   {  |   }  |   ´  |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
  *                   | LAlt | LGUI |LOWER | /Space  /       \Enter \  |RAISE |BackSP| RGUI |
  *                   |      |      |      |/       /         \      \ |      |      |      |
@@ -56,31 +57,31 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_LOWER] = LAYOUT( \
   _______, _______, _______, _______, _______, _______,                   _______, _______, _______,_______, _______, _______,\
   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,                     KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12, \
-  KC_GRV, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC,                   KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_TILD, \
-  KC_CAPS, _______, _______, _______, _______, _______, _______, _______, XXXXXXX, KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, KC_PIPE, \
+  KC_GRV,  KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC,                   KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_TILD, \
+  KC_CAPS, US_IEXL, LSA(KC_SLSH), LSA(KC_8), US_NOT , _______, _______, _______, _ENHE, KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, ALGR(KC_E), \
                              _______, _______, _______, _______, _______,  _______, _______, _______\
 ),
 /* RAISE
  * ,-----------------------------------------.                    ,-----------------------------------------.
  * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |   `  |   1  |   2  |   3  |   4  |   5  |                    |   6  |   7  |  Up  |   9  |   0  |      |
+ * |   `  |   1  |   2  |   3  |   4  |   5  |                    |   6  |   7  |  Up  |   8  |   9  |  0   |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |-------.    ,-------|      | Left | Down |  Right  | 8 |      |
+ * |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |-------.    ,-------|      | Left | Down | Right|  8  |      |
  * |------+------+------+------+------+------|   [   |    |    ]  |------+------+------+------+------+------|
- * |RShift|  F8  |  F9  | F10  | F11  | F12  |-------|    |-------|   +  |   -  |   =  |   [  |   ]  |   \  |
+ * |RShift|  F8  |  F9  | F10  | F11  | F12  |-------|    |-------|   +  |   -  |   =  |   }  |  \  |   |  |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
- *                   | LAlt | LGUI |LOWER | /Space  /       \Enter \  |RAISE |BackSP| RGUI |
+ *                   | LAlt | LGUI |LOWER | /Space  /       \Enter \  |RAISE | DEL  | RGUI |
  *                   |      |      |      |/       /         \      \ |      |      |      |
  *                   `----------------------------'           '------''--------------------'
  */
 
 [_RAISE] = LAYOUT( \
   _______, _______, _______, _______, _______, _______,                     _______, _______, _______, _______, _______, _______, \
-  KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                        KC_6,    KC_7,    KC_UP,    KC_9,    KC_0,    _______, \
-  KC_F1,  KC_F2,    KC_F3,   KC_F4,   KC_F5,   KC_F6,                       XXXXXXX, KC_LEFT, KC_DOWN, KC_RGHT,   KC_8, XXXXXXX, \
-  KC_RSFT, KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,   _______, _______,  KC_PLUS, KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC, KC_BSLS, \
-                             _______, _______, _______,  _______, _______,  _______, _______, _______ \
+  KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                        KC_6,    KC_7,    KC_UP,    KC_8,    KC_9,    KC_0, \
+  KC_F1,  KC_F2,    KC_F3,   KC_F4,   KC_F5,   KC_F6,                       XXXXXXX, KC_LEFT, KC_DOWN, KC_RGHT, XXXXXXX, XXXXXXX, \
+  KC_RSFT, KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,   _______, _______,  KC_PLUS, KC_MINS, KC_EQL,  KC_ASTR, KC_BSLS, KC_PIPE, \
+                             _______, _______, _______,  _______, _______,  _______, KC_DEL, _______ \
 ),
 /* ADJUST
  * ,-----------------------------------------.                    ,-----------------------------------------.
@@ -105,9 +106,28 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   )
 };
 
+// Works with ABC extended layout in OSX
+void td_enhe(qk_tap_dance_state_t *state, void *user_data) {
+  switch (state->count) {
+  case 1:
+    tap_code(KC_N);
+    break;
+  case 2:
+    add_mods(MOD_MASK_ALT);
+    register_code(US_N);
+    del_mods(MOD_MASK_ALT);
+
+    tap_code(KC_N);
+
+    break;
+  }
+}
+
 qk_tap_dance_action_t tap_dance_actions[] = {
+    // Works with ABC extended layout in OSX
+    [TD_ENHE] = ACTION_TAP_DANCE_FN(td_enhe),
+
     // Tap once for Esc, twice for Caps Lock
-    [TD_ENHE] = ACTION_TAP_DANCE_DOUBLE(KC_N, US_NTIL),
     [TD_LSHT_CLOCK] = ACTION_TAP_DANCE_DOUBLE(KC_LSFT, KC_CAPS),
     // Other declarations would go here, separated by commas, if you have them
 };
@@ -154,10 +174,23 @@ void oled_task_user(void) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   if (record->event.pressed) {
-#ifdef OLED_DRIVER_ENABLE
-    set_keylog(keycode, record);
-#endif
+    #ifdef OLED_DRIVER_ENABLE
+      set_keylog(keycode, record);
+    #endif
     // set_timelog();
   }
+
+  // Works with ABC extended layout in OSX
+  switch (keycode) {
+    case _ENHE:
+      if (record->event.pressed) {
+        add_mods(MOD_MASK_ALT);
+        register_code(US_N);
+        del_mods(MOD_MASK_ALT);
+
+        tap_code(KC_N);
+      }
+      break;
+     }
   return true;
 }
