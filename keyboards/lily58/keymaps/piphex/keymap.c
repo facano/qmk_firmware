@@ -63,7 +63,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 /* RAISE
  * ,-----------------------------------------.                    ,-----------------------------------------.
- * |      |   1  |   2  |   3  |   4  |   5  |                    |   6  |   7  |  8   |   9  |   0  |      |
+ * |      |   1  |   2  |   3  |   4  |   5  |                    |   6  |   7  |  8   |   9  |   0  |Numlock|
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |      |      |      |      |      |      |                    |Pg Up | Home |  Up  | End  |Insert|      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
@@ -77,7 +77,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 
 [_RAISE] = LAYOUT( \
-  _______,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                          KC_6,   KC_7,    KC_8,     KC_9,        KC_0, _______,\
+  _______, KC_KP_1, KC_KP_2, KC_KP_3, KC_KP_4, KC_KP_5,                     KC_KP_6,   KC_KP_7, KC_KP_8, KC_KP_9, KC_KP_0,   KC_NLCK,\
   _______, _______, _______, _______, _______, _______,                     KC_PGUP,   KC_HOME, KC_UP,   KC_END,  KC_INSERT, _______, \
   KC_F1,  KC_F2,    KC_F3,   KC_F4,   KC_F5,   KC_F6,                       KC_PGDOWN, KC_LEFT, KC_DOWN, KC_RGHT, _______,   LSA(KC_8), \
   KC_RSFT, KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,   KC_LT,     KC_GT,  KC_PLUS,  KC_MINS,  KC_EQL,  KC_ASTR, KC_BSLS,   KC_PERC, \
